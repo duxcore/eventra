@@ -14,15 +14,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Eventra = void 0;
 const ListenerArray_1 = __importDefault(__webpack_require__(351));
 class Eventra {
-    constructor(options) {
+    constructor() {
         this._listeners = new ListenerArray_1.default({ mode: "recurring" });
         this._singularListeners = new ListenerArray_1.default({ mode: "once" });
         this.addListener = this.on;
         this.off = this.removeListener;
-        if (!options)
-            this._options = { maxListeners: 50 };
-        else
-            this._options = options;
     }
     emit(event, ...args) {
         this._listeners.executeEvent(event, ...args);
@@ -40,23 +36,31 @@ class Eventra {
         });
         return finalNamesArray;
     }
-    getMaxListeners() {
-        return this._options.maxListeners;
-    }
     listenerCount(eventName) {
         const recurring = this._listeners.countListeners(eventName);
         const singular = this._singularListeners.countListeners(eventName);
         return (recurring + singular);
     }
-    listeners(eventName) { }
+    listeners(eventName) {
+        let recurring = this._listeners.fetchListeners(eventName);
+        let singular = this._singularListeners.fetchListeners(eventName);
+        return {
+            recurring,
+            singular
+        };
+    }
     on(eventName, listener) {
         this._listeners.add(eventName, listener);
     }
     once(eventName, listener) {
         this._singularListeners.add(eventName, listener);
     }
-    prependListener(event, callback) { }
-    prependOnceListener(event, callback) { }
+    prependListener(eventName, listener) {
+        this._listeners.prepend(eventName, listener);
+    }
+    prependOnceListener(eventName, listener) {
+        this._singularListeners.prepend(eventName, listener);
+    }
     removeAllListeners(eventName) {
         const listeners = typeof eventName == 'string' ? [eventName] : eventName;
         listeners.map(en => {
@@ -70,11 +74,6 @@ class Eventra {
         this._singularListeners.removeListener(eventName, listener);
         return this;
     }
-    setMaxListeners(n) {
-        this._options.maxListeners = n;
-        return this;
-    }
-    rawListeners(eventName) { }
 }
 exports.Eventra = Eventra;
 
@@ -167,6 +166,12 @@ class ListenerArray {
         if (!event)
             return 0;
         return event.length;
+    }
+    fetchListeners(eventName) {
+        const event = this._internalStorage.get(eventName);
+        if (!event)
+            return [];
+        return event;
     }
     executeEvent(eventName, ...args) {
         let carbonCopy = this._cloneInternalStorage();

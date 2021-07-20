@@ -1,21 +1,10 @@
 import ListenerArray from "./lib/ListenerArray";
 import { ListenerCallback } from "./types";
 
-export interface EventraOptions {
-  maxListeners: number;
-}
-
 export class Eventra {
   
   private _listeners = new ListenerArray({ mode: "recurring" });
   private _singularListeners = new ListenerArray({ mode: "once" });
-
-  private _options: EventraOptions;
-
-  constructor(options?: EventraOptions) {
-    if (!options) this._options = { maxListeners: 50 }
-    else this._options = options;
-  }
 
   addListener = this.on;
   off = this.removeListener;
@@ -39,27 +28,42 @@ export class Eventra {
     return finalNamesArray;
   }
 
-  getMaxListeners(): number {
-    return this._options.maxListeners;
-  }
-
+  
   listenerCount(eventName: string): number {
     const recurring = this._listeners.countListeners(eventName);
     const singular = this._singularListeners.countListeners(eventName);
 
     return (recurring + singular);
   }
-  listeners(eventName: string) {}
+  
+  listeners(eventName: string) {
+    let recurring = this._listeners.fetchListeners(eventName);
+    let singular = this._singularListeners.fetchListeners(eventName);
+
+    return {
+      recurring,
+      singular
+    }
+  }
+
 
   on(eventName: string, listener: ListenerCallback) {
     this._listeners.add(eventName, listener);
   }
+  
   once(eventName: string, listener: ListenerCallback) {
     this._singularListeners.add(eventName, listener);
   }
 
-  prependListener(event: string, callback: ListenerCallback) {}
-  prependOnceListener(event: string, callback: ListenerCallback) {}
+
+  prependListener(eventName: string, listener: ListenerCallback) {
+    this._listeners.prepend(eventName, listener);
+  }
+  
+  prependOnceListener(eventName: string, listener: ListenerCallback) {
+    this._singularListeners.prepend(eventName, listener);
+  }
+
 
   removeAllListeners(eventName: string | string[]): this {
     const listeners = typeof eventName == 'string' ? [ eventName ] : eventName;
@@ -71,17 +75,11 @@ export class Eventra {
 
     return this;
   }
+
   removeListener(eventName: string, listener: ListenerCallback): this {
     this._listeners.removeListener(eventName, listener);
     this._singularListeners.removeListener(eventName, listener);
 
     return this;
   }
-
-  setMaxListeners(n: number): this {
-    this._options.maxListeners = n;
-    return this;
-  }
-
-  rawListeners(eventName: string) {}
 }
