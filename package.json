@@ -1,0 +1,21 @@
+{
+  "name": "@duxcore/eventra",
+  "version": "1.0.0",
+  "description": "A lightweight, but powerful JavaScript event manger that will work in both in the browser and node.js.",
+  "main": "lib/index.js",
+  "repository": "https://github.com/duxcore/eventra.git",
+  "author": "Jackson Roberts <jackson@holopanio.com>",
+  "license": "GPL-3.0",
+  "private": false,
+  "scripts": {
+    "build": "zx scripts/build.mjs"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.29.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2",
+    "zx": "^2.0.0"
+  }
+}
