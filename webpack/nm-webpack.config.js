@@ -6,9 +6,12 @@ module.exports = {
   
   output: {
     path: 'dist',
-    filename: 'eventra.min.js',
+    filename: 'eventra.js',
     libraryTarget: "var",
     library: 'Eventra',
     path: path.resolve(__dirname, 'webpack'),
+  },
+  optimization: {
+    minimize: false
   },
 };

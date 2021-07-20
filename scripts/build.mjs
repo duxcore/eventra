@@ -18,8 +18,8 @@ options.map((opt, index) => {
 
 if (parameters.typescript) await $`tsc`;
 if (parameters.webpack) {
-  await $` webpack --mode development -o dist --output-filename eventra.js --config webpack/webpack.config.js --no-stats`
-  await $` webpack --mode production -o dist --output-filename eventra.min.js --config webpack/webpack.config.js --no-stats`
+  await $` webpack -o dist --config webpack/nm-webpack.config.js --no-stats`
+  await $` webpack -o dist --config webpack/webpack.config.js --no-stats`
 }
 
 console.log('Done!');

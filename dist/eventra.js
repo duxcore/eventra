@@ -1,43 +1,573 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 var Eventra;
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./lib/index.js":
-/*!**********************!*\
-  !*** ./lib/index.js ***!
-  \**********************/
+/***/ 568:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
-eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.Eventra = void 0;\nconst ListenerArray_1 = __importDefault(__webpack_require__(/*! ./lib/ListenerArray */ \"./lib/lib/ListenerArray.js\"));\nclass Eventra {\n    constructor(options) {\n        this._listeners = new ListenerArray_1.default({ mode: \"recurring\" });\n        this._singularListeners = new ListenerArray_1.default({ mode: \"once\" });\n        this.addListener = this.on;\n        this.off = this.removeListener;\n        if (!options)\n            this._options = { maxListeners: 50 };\n        else\n            this._options = options;\n    }\n    emit(event, ...args) {\n        this._listeners.executeEvent(event, ...args);\n        this._singularListeners.executeEvent(event, ...args);\n    }\n    eventNames() {\n        let finalNamesArray = [];\n        this._listeners.storage.map((val, key) => {\n            if (!finalNamesArray.includes(key))\n                finalNamesArray.push(key);\n        });\n        this._singularListeners.storage.map((val, key) => {\n            if (!finalNamesArray.includes(key))\n                finalNamesArray.push(key);\n        });\n        return finalNamesArray;\n    }\n    getMaxListeners() {\n        return this._options.maxListeners;\n    }\n    listenerCount(eventName) {\n        const recurring = this._listeners.countListeners(eventName);\n        const singular = this._singularListeners.countListeners(eventName);\n        return (recurring + singular);\n    }\n    listeners(eventName) { }\n    on(eventName, listener) {\n        this._listeners.add(eventName, listener);\n    }\n    once(eventName, listener) {\n        this._singularListeners.add(eventName, listener);\n    }\n    prependListener(event, callback) { }\n    prependOnceListener(event, callback) { }\n    removeAllListeners(eventName) {\n        const listeners = typeof eventName == 'string' ? [eventName] : eventName;\n        listeners.map(en => {\n            this._listeners.removeEvent(en);\n            this._singularListeners.removeEvent(en);\n        });\n        return this;\n    }\n    removeListener(eventName, listener) {\n        this._listeners.removeListener(eventName, listener);\n        this._singularListeners.removeListener(eventName, listener);\n        return this;\n    }\n    setMaxListeners(n) {\n        this._options.maxListeners = n;\n        return this;\n    }\n    rawListeners(eventName) { }\n}\nexports.Eventra = Eventra;\n\n\n//# sourceURL=webpack://Eventra/./lib/index.js?");
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Eventra = void 0;
+const ListenerArray_1 = __importDefault(__webpack_require__(351));
+class Eventra {
+    constructor(options) {
+        this._listeners = new ListenerArray_1.default({ mode: "recurring" });
+        this._singularListeners = new ListenerArray_1.default({ mode: "once" });
+        this.addListener = this.on;
+        this.off = this.removeListener;
+        if (!options)
+            this._options = { maxListeners: 50 };
+        else
+            this._options = options;
+    }
+    emit(event, ...args) {
+        this._listeners.executeEvent(event, ...args);
+        this._singularListeners.executeEvent(event, ...args);
+    }
+    eventNames() {
+        let finalNamesArray = [];
+        this._listeners.storage.map((val, key) => {
+            if (!finalNamesArray.includes(key))
+                finalNamesArray.push(key);
+        });
+        this._singularListeners.storage.map((val, key) => {
+            if (!finalNamesArray.includes(key))
+                finalNamesArray.push(key);
+        });
+        return finalNamesArray;
+    }
+    getMaxListeners() {
+        return this._options.maxListeners;
+    }
+    listenerCount(eventName) {
+        const recurring = this._listeners.countListeners(eventName);
+        const singular = this._singularListeners.countListeners(eventName);
+        return (recurring + singular);
+    }
+    listeners(eventName) { }
+    on(eventName, listener) {
+        this._listeners.add(eventName, listener);
+    }
+    once(eventName, listener) {
+        this._singularListeners.add(eventName, listener);
+    }
+    prependListener(event, callback) { }
+    prependOnceListener(event, callback) { }
+    removeAllListeners(eventName) {
+        const listeners = typeof eventName == 'string' ? [eventName] : eventName;
+        listeners.map(en => {
+            this._listeners.removeEvent(en);
+            this._singularListeners.removeEvent(en);
+        });
+        return this;
+    }
+    removeListener(eventName, listener) {
+        this._listeners.removeListener(eventName, listener);
+        this._singularListeners.removeListener(eventName, listener);
+        return this;
+    }
+    setMaxListeners(n) {
+        this._options.maxListeners = n;
+        return this;
+    }
+    rawListeners(eventName) { }
+}
+exports.Eventra = Eventra;
+
 
 /***/ }),
 
-/***/ "./lib/lib/ListenerArray.js":
-/*!**********************************!*\
-  !*** ./lib/lib/ListenerArray.js ***!
-  \**********************************/
+/***/ 351:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
-eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nconst Collection_1 = __importDefault(__webpack_require__(/*! ../util/Collection */ \"./lib/util/Collection.js\"));\nclass ListenerArray {\n    constructor(options) {\n        this._internalStorage = new Collection_1.default();\n        if (!options)\n            this._options = { mode: \"recurring\" };\n        else\n            this._options = options;\n    }\n    get mode() { return this._options.mode; }\n    get storage() { return this._internalStorage; }\n    _updateInternalStorage(collection) {\n        if (!collection)\n            return;\n        this._internalStorage = collection;\n        return;\n    }\n    _cloneInternalStorage() {\n        const internal = this._internalStorage.clone();\n        return internal;\n    }\n    add(eventName, listener) {\n        let carbonCopy = this._cloneInternalStorage();\n        let event = carbonCopy.get(eventName);\n        if (!event) {\n            carbonCopy.set(eventName, [listener]);\n            this._updateInternalStorage(carbonCopy);\n            return this;\n        }\n        event.push(listener);\n        this._updateInternalStorage(carbonCopy);\n        return this;\n    }\n    prepend(eventName, listener) {\n        let carbonCopy = this._cloneInternalStorage();\n        let event = carbonCopy.get(eventName);\n        if (!event) {\n            carbonCopy.set(eventName, [listener]);\n            this._updateInternalStorage(carbonCopy);\n            return this;\n        }\n        event.unshift(listener);\n        this._updateInternalStorage(carbonCopy);\n        return this;\n    }\n    removeListener(eventName, listener) {\n        let carbonCopy = this._cloneInternalStorage();\n        let event = carbonCopy.get(eventName);\n        if (!event)\n            return this;\n        if (!event.includes(listener))\n            return this;\n        if (event.length == 1) {\n            carbonCopy.delete(eventName);\n            this._updateInternalStorage(carbonCopy);\n            return this;\n        }\n        ;\n        const index = event.indexOf(listener);\n        if (index > -1)\n            event.splice(index, 1);\n        this._updateInternalStorage(carbonCopy);\n        return this;\n    }\n    removeEvent(eventName) {\n        let carbonCopy = this._cloneInternalStorage();\n        let event = carbonCopy.get(eventName);\n        if (!event)\n            return this;\n        carbonCopy.delete(eventName);\n        this._updateInternalStorage(carbonCopy);\n        return this;\n    }\n    countListeners(eventName) {\n        const event = this._internalStorage.get(eventName);\n        if (!event)\n            return 0;\n        return event.length;\n    }\n    executeEvent(eventName, ...args) {\n        let carbonCopy = this._cloneInternalStorage();\n        let event = carbonCopy.get(eventName);\n        if (!event)\n            return this;\n        event.map((method, index) => {\n            method(...args);\n            return;\n        });\n        if (this.mode == 'once')\n            carbonCopy.delete(eventName);\n        this._updateInternalStorage(carbonCopy);\n        return this;\n    }\n}\nexports.default = ListenerArray;\n\n\n//# sourceURL=webpack://Eventra/./lib/lib/ListenerArray.js?");
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const Collection_1 = __importDefault(__webpack_require__(286));
+class ListenerArray {
+    constructor(options) {
+        this._internalStorage = new Collection_1.default();
+        if (!options)
+            this._options = { mode: "recurring" };
+        else
+            this._options = options;
+    }
+    get mode() { return this._options.mode; }
+    get storage() { return this._internalStorage; }
+    _updateInternalStorage(collection) {
+        if (!collection)
+            return;
+        this._internalStorage = collection;
+        return;
+    }
+    _cloneInternalStorage() {
+        const internal = this._internalStorage.clone();
+        return internal;
+    }
+    add(eventName, listener) {
+        let carbonCopy = this._cloneInternalStorage();
+        let event = carbonCopy.get(eventName);
+        if (!event) {
+            carbonCopy.set(eventName, [listener]);
+            this._updateInternalStorage(carbonCopy);
+            return this;
+        }
+        event.push(listener);
+        this._updateInternalStorage(carbonCopy);
+        return this;
+    }
+    prepend(eventName, listener) {
+        let carbonCopy = this._cloneInternalStorage();
+        let event = carbonCopy.get(eventName);
+        if (!event) {
+            carbonCopy.set(eventName, [listener]);
+            this._updateInternalStorage(carbonCopy);
+            return this;
+        }
+        event.unshift(listener);
+        this._updateInternalStorage(carbonCopy);
+        return this;
+    }
+    removeListener(eventName, listener) {
+        let carbonCopy = this._cloneInternalStorage();
+        let event = carbonCopy.get(eventName);
+        if (!event)
+            return this;
+        if (!event.includes(listener))
+            return this;
+        if (event.length == 1) {
+            carbonCopy.delete(eventName);
+            this._updateInternalStorage(carbonCopy);
+            return this;
+        }
+        ;
+        const index = event.indexOf(listener);
+        if (index > -1)
+            event.splice(index, 1);
+        this._updateInternalStorage(carbonCopy);
+        return this;
+    }
+    removeEvent(eventName) {
+        let carbonCopy = this._cloneInternalStorage();
+        let event = carbonCopy.get(eventName);
+        if (!event)
+            return this;
+        carbonCopy.delete(eventName);
+        this._updateInternalStorage(carbonCopy);
+        return this;
+    }
+    countListeners(eventName) {
+        const event = this._internalStorage.get(eventName);
+        if (!event)
+            return 0;
+        return event.length;
+    }
+    executeEvent(eventName, ...args) {
+        let carbonCopy = this._cloneInternalStorage();
+        let event = carbonCopy.get(eventName);
+        if (!event)
+            return this;
+        event.map((method, index) => {
+            method(...args);
+            return;
+        });
+        if (this.mode == 'once')
+            carbonCopy.delete(eventName);
+        this._updateInternalStorage(carbonCopy);
+        return this;
+    }
+}
+exports.default = ListenerArray;
+
 
 /***/ }),
 
-/***/ "./lib/util/Collection.js":
-/*!********************************!*\
-  !*** ./lib/util/Collection.js ***!
-  \********************************/
+/***/ 286:
 /***/ ((__unused_webpack_module, exports) => {
 
-eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.Collection = void 0;\n/**\n * A Map with additional utility methods. This is used throughout discord.js rather than Arrays for anything that has\n * an ID, for significantly improved performance and ease-of-use.\n * @extends {Map}\n * @property {number} size - The amount of elements in this collection.\n */\nclass Collection extends Map {\n    /**\n     * Identical to [Map.get()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get).\n     * Gets an element with the specified key, and returns its value, or `undefined` if the element does not exist.\n     * @param {*} key - The key to get from this collection\n     * @returns {* | undefined}\n     */\n    get(key) {\n        return super.get(key);\n    }\n    /**\n     * Identical to [Map.set()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/set).\n     * Sets a new element in the collection with the specified key and value.\n     * @param {*} key - The key of the element to add\n     * @param {*} value - The value of the element to add\n     * @returns {Collection}\n     */\n    set(key, value) {\n        return super.set(key, value);\n    }\n    /**\n     * Identical to [Map.has()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has).\n     * Checks if an element exists in the collection.\n     * @param {*} key - The key of the element to check for\n     * @returns {boolean} `true` if the element exists, `false` if it does not exist.\n     */\n    has(key) {\n        return super.has(key);\n    }\n    /**\n     * Identical to [Map.delete()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/delete).\n     * Deletes an element from the collection.\n     * @param {*} key - The key to delete from the collection\n     * @returns {boolean} `true` if the element was removed, `false` if the element does not exist.\n     */\n    delete(key) {\n        return super.delete(key);\n    }\n    /**\n     * Identical to [Map.clear()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/clear).\n     * Removes all elements from the collection.\n     * @returns {undefined}\n     */\n    clear() {\n        return super.clear();\n    }\n    /**\n     * Checks if all of the elements exist in the collection.\n     * @param {...*} keys - The keys of the elements to check for\n     * @returns {boolean} `true` if all of the elements exist, `false` if at least one does not exist.\n     */\n    hasAll(...keys) {\n        return keys.every((k) => super.has(k));\n    }\n    /**\n     * Checks if any of the elements exist in the collection.\n     * @param {...*} keys - The keys of the elements to check for\n     * @returns {boolean} `true` if any of the elements exist, `false` if none exist.\n     */\n    hasAny(...keys) {\n        return keys.some((k) => super.has(k));\n    }\n    first(amount) {\n        if (typeof amount === 'undefined')\n            return this.values().next().value;\n        if (amount < 0)\n            return this.last(amount * -1);\n        amount = Math.min(this.size, amount);\n        const iter = this.values();\n        return Array.from({ length: amount }, () => iter.next().value);\n    }\n    firstKey(amount) {\n        if (typeof amount === 'undefined')\n            return this.keys().next().value;\n        if (amount < 0)\n            return this.lastKey(amount * -1);\n        amount = Math.min(this.size, amount);\n        const iter = this.keys();\n        return Array.from({ length: amount }, () => iter.next().value);\n    }\n    last(amount) {\n        const arr = [...this.values()];\n        if (typeof amount === 'undefined')\n            return arr[arr.length - 1];\n        if (amount < 0)\n            return this.first(amount * -1);\n        if (!amount)\n            return [];\n        return arr.slice(-amount);\n    }\n    lastKey(amount) {\n        const arr = [...this.keys()];\n        if (typeof amount === 'undefined')\n            return arr[arr.length - 1];\n        if (amount < 0)\n            return this.firstKey(amount * -1);\n        if (!amount)\n            return [];\n        return arr.slice(-amount);\n    }\n    random(amount) {\n        const arr = [...this.values()];\n        if (typeof amount === 'undefined')\n            return arr[Math.floor(Math.random() * arr.length)];\n        if (!arr.length || !amount)\n            return [];\n        return Array.from({ length: Math.min(amount, arr.length) }, () => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);\n    }\n    randomKey(amount) {\n        const arr = [...this.keys()];\n        if (typeof amount === 'undefined')\n            return arr[Math.floor(Math.random() * arr.length)];\n        if (!arr.length || !amount)\n            return [];\n        return Array.from({ length: Math.min(amount, arr.length) }, () => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);\n    }\n    find(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        for (const [key, val] of this) {\n            if (fn(val, key, this))\n                return val;\n        }\n        return undefined;\n    }\n    findKey(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        for (const [key, val] of this) {\n            if (fn(val, key, this))\n                return key;\n        }\n        return undefined;\n    }\n    sweep(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        const previousSize = this.size;\n        for (const [key, val] of this) {\n            if (fn(val, key, this))\n                this.delete(key);\n        }\n        return previousSize - this.size;\n    }\n    filter(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        const results = new this.constructor[Symbol.species]();\n        for (const [key, val] of this) {\n            if (fn(val, key, this))\n                results.set(key, val);\n        }\n        return results;\n    }\n    partition(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        const results = [\n            new this.constructor[Symbol.species](),\n            new this.constructor[Symbol.species](),\n        ];\n        for (const [key, val] of this) {\n            if (fn(val, key, this)) {\n                results[0].set(key, val);\n            }\n            else {\n                results[1].set(key, val);\n            }\n        }\n        return results;\n    }\n    flatMap(fn, thisArg) {\n        const collections = this.map(fn, thisArg);\n        return new this.constructor[Symbol.species]().concat(...collections);\n    }\n    map(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        const iter = this.entries();\n        return Array.from({ length: this.size }, () => {\n            const [key, value] = iter.next().value;\n            return fn(value, key, this);\n        });\n    }\n    mapValues(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        const coll = new this.constructor[Symbol.species]();\n        for (const [key, val] of this)\n            coll.set(key, fn(val, key, this));\n        return coll;\n    }\n    some(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        for (const [key, val] of this) {\n            if (fn(val, key, this))\n                return true;\n        }\n        return false;\n    }\n    every(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        for (const [key, val] of this) {\n            if (!fn(val, key, this))\n                return false;\n        }\n        return true;\n    }\n    /**\n     * Applies a function to produce a single value. Identical in behavior to\n     * [Array.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce).\n     * @param {Function} fn Function used to reduce, taking four arguments; `accumulator`, `currentValue`, `currentKey`,\n     * and `collection`\n     * @param {*} [initialValue] Starting value for the accumulator\n     * @returns {*}\n     * @example collection.reduce((acc, guild) => acc + guild.memberCount, 0);\n     */\n    reduce(fn, initialValue) {\n        let accumulator;\n        if (typeof initialValue !== 'undefined') {\n            accumulator = initialValue;\n            for (const [key, val] of this)\n                accumulator = fn(accumulator, val, key, this);\n            return accumulator;\n        }\n        let first = true;\n        for (const [key, val] of this) {\n            if (first) {\n                accumulator = val;\n                first = false;\n                continue;\n            }\n            accumulator = fn(accumulator, val, key, this);\n        }\n        // No items iterated.\n        if (first) {\n            throw new TypeError('Reduce of empty collection with no initial value');\n        }\n        return accumulator;\n    }\n    each(fn, thisArg) {\n        this.forEach(fn, thisArg);\n        return this;\n    }\n    tap(fn, thisArg) {\n        if (typeof thisArg !== 'undefined')\n            fn = fn.bind(thisArg);\n        fn(this);\n        return this;\n    }\n    /**\n     * Creates an identical shallow copy of this collection.\n     * @returns {Collection}\n     * @example const newColl = someColl.clone();\n     */\n    clone() {\n        return new this.constructor[Symbol.species](this);\n    }\n    /**\n     * Combines this collection with others into a new collection. None of the source collections are modified.\n     * @param {...Collection} collections Collections to merge\n     * @returns {Collection}\n     * @example const newColl = someColl.concat(someOtherColl, anotherColl, ohBoyAColl);\n     */\n    concat(...collections) {\n        const newColl = this.clone();\n        for (const coll of collections) {\n            for (const [key, val] of coll)\n                newColl.set(key, val);\n        }\n        return newColl;\n    }\n    /**\n     * Checks if this collection shares identical items with another.\n     * This is different to checking for equality using equal-signs, because\n     * the collections may be different objects, but contain the same data.\n     * @param {Collection} collection Collection to compare with\n     * @returns {boolean} Whether the collections have identical contents\n     */\n    equals(collection) {\n        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition\n        if (!collection)\n            return false; // runtime check\n        if (this === collection)\n            return true;\n        if (this.size !== collection.size)\n            return false;\n        for (const [key, value] of this) {\n            if (!collection.has(key) || value !== collection.get(key)) {\n                return false;\n            }\n        }\n        return true;\n    }\n    /**\n     * The sort method sorts the items of a collection in place and returns it.\n     * The sort is not necessarily stable in Node 10 or older.\n     * The default sort order is according to string Unicode code points.\n     * @param {Function} [compareFunction] Specifies a function that defines the sort order.\n     * If omitted, the collection is sorted according to each character's Unicode code point value,\n     * according to the string conversion of each element.\n     * @returns {Collection}\n     * @example collection.sort((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);\n     */\n    sort(compareFunction = Collection.defaultSort) {\n        const entries = [...this.entries()];\n        entries.sort((a, b) => compareFunction(a[1], b[1], a[0], b[0]));\n        // Perform clean-up\n        super.clear();\n        // Set the new entries\n        for (const [k, v] of entries) {\n            super.set(k, v);\n        }\n        return this;\n    }\n    /**\n     * The intersect method returns a new structure containing items where the keys are present in both original structures.\n     * @param {Collection} other The other Collection to filter against\n     * @returns {Collection}\n     */\n    intersect(other) {\n        const coll = new this.constructor[Symbol.species]();\n        for (const [k, v] of other) {\n            if (this.has(k))\n                coll.set(k, v);\n        }\n        return coll;\n    }\n    /**\n     * The difference method returns a new structure containing items where the key is present in one of the original structures but not the other.\n     * @param {Collection} other The other Collection to filter against\n     * @returns {Collection}\n     */\n    difference(other) {\n        const coll = new this.constructor[Symbol.species]();\n        for (const [k, v] of other) {\n            if (!this.has(k))\n                coll.set(k, v);\n        }\n        for (const [k, v] of this) {\n            if (!other.has(k))\n                coll.set(k, v);\n        }\n        return coll;\n    }\n    /**\n     * The sorted method sorts the items of a collection and returns it.\n     * The sort is not necessarily stable in Node 10 or older.\n     * The default sort order is according to string Unicode code points.\n     * @param {Function} [compareFunction] Specifies a function that defines the sort order.\n     * If omitted, the collection is sorted according to each character's Unicode code point value,\n     * according to the string conversion of each element.\n     * @returns {Collection}\n     * @example collection.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);\n     */\n    sorted(compareFunction = Collection.defaultSort) {\n        return new this.constructor[Symbol.species](this).sort((av, bv, ak, bk) => compareFunction(av, bv, ak, bk));\n    }\n    static defaultSort(firstValue, secondValue) {\n        return Number(firstValue > secondValue) || Number(firstValue === secondValue) - 1;\n    }\n}\nexports.Collection = Collection;\nCollection.default = Collection;\nexports.default = Collection;\n\n\n//# sourceURL=webpack://Eventra/./lib/util/Collection.js?");
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Collection = void 0;
+/**
+ * A Map with additional utility methods. This is used throughout discord.js rather than Arrays for anything that has
+ * an ID, for significantly improved performance and ease-of-use.
+ * @extends {Map}
+ * @property {number} size - The amount of elements in this collection.
+ */
+class Collection extends Map {
+    /**
+     * Identical to [Map.get()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get).
+     * Gets an element with the specified key, and returns its value, or `undefined` if the element does not exist.
+     * @param {*} key - The key to get from this collection
+     * @returns {* | undefined}
+     */
+    get(key) {
+        return super.get(key);
+    }
+    /**
+     * Identical to [Map.set()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/set).
+     * Sets a new element in the collection with the specified key and value.
+     * @param {*} key - The key of the element to add
+     * @param {*} value - The value of the element to add
+     * @returns {Collection}
+     */
+    set(key, value) {
+        return super.set(key, value);
+    }
+    /**
+     * Identical to [Map.has()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has).
+     * Checks if an element exists in the collection.
+     * @param {*} key - The key of the element to check for
+     * @returns {boolean} `true` if the element exists, `false` if it does not exist.
+     */
+    has(key) {
+        return super.has(key);
+    }
+    /**
+     * Identical to [Map.delete()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/delete).
+     * Deletes an element from the collection.
+     * @param {*} key - The key to delete from the collection
+     * @returns {boolean} `true` if the element was removed, `false` if the element does not exist.
+     */
+    delete(key) {
+        return super.delete(key);
+    }
+    /**
+     * Identical to [Map.clear()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/clear).
+     * Removes all elements from the collection.
+     * @returns {undefined}
+     */
+    clear() {
+        return super.clear();
+    }
+    /**
+     * Checks if all of the elements exist in the collection.
+     * @param {...*} keys - The keys of the elements to check for
+     * @returns {boolean} `true` if all of the elements exist, `false` if at least one does not exist.
+     */
+    hasAll(...keys) {
+        return keys.every((k) => super.has(k));
+    }
+    /**
+     * Checks if any of the elements exist in the collection.
+     * @param {...*} keys - The keys of the elements to check for
+     * @returns {boolean} `true` if any of the elements exist, `false` if none exist.
+     */
+    hasAny(...keys) {
+        return keys.some((k) => super.has(k));
+    }
+    first(amount) {
+        if (typeof amount === 'undefined')
+            return this.values().next().value;
+        if (amount < 0)
+            return this.last(amount * -1);
+        amount = Math.min(this.size, amount);
+        const iter = this.values();
+        return Array.from({ length: amount }, () => iter.next().value);
+    }
+    firstKey(amount) {
+        if (typeof amount === 'undefined')
+            return this.keys().next().value;
+        if (amount < 0)
+            return this.lastKey(amount * -1);
+        amount = Math.min(this.size, amount);
+        const iter = this.keys();
+        return Array.from({ length: amount }, () => iter.next().value);
+    }
+    last(amount) {
+        const arr = [...this.values()];
+        if (typeof amount === 'undefined')
+            return arr[arr.length - 1];
+        if (amount < 0)
+            return this.first(amount * -1);
+        if (!amount)
+            return [];
+        return arr.slice(-amount);
+    }
+    lastKey(amount) {
+        const arr = [...this.keys()];
+        if (typeof amount === 'undefined')
+            return arr[arr.length - 1];
+        if (amount < 0)
+            return this.firstKey(amount * -1);
+        if (!amount)
+            return [];
+        return arr.slice(-amount);
+    }
+    random(amount) {
+        const arr = [...this.values()];
+        if (typeof amount === 'undefined')
+            return arr[Math.floor(Math.random() * arr.length)];
+        if (!arr.length || !amount)
+            return [];
+        return Array.from({ length: Math.min(amount, arr.length) }, () => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
+    }
+    randomKey(amount) {
+        const arr = [...this.keys()];
+        if (typeof amount === 'undefined')
+            return arr[Math.floor(Math.random() * arr.length)];
+        if (!arr.length || !amount)
+            return [];
+        return Array.from({ length: Math.min(amount, arr.length) }, () => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
+    }
+    find(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        for (const [key, val] of this) {
+            if (fn(val, key, this))
+                return val;
+        }
+        return undefined;
+    }
+    findKey(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        for (const [key, val] of this) {
+            if (fn(val, key, this))
+                return key;
+        }
+        return undefined;
+    }
+    sweep(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        const previousSize = this.size;
+        for (const [key, val] of this) {
+            if (fn(val, key, this))
+                this.delete(key);
+        }
+        return previousSize - this.size;
+    }
+    filter(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        const results = new this.constructor[Symbol.species]();
+        for (const [key, val] of this) {
+            if (fn(val, key, this))
+                results.set(key, val);
+        }
+        return results;
+    }
+    partition(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        const results = [
+            new this.constructor[Symbol.species](),
+            new this.constructor[Symbol.species](),
+        ];
+        for (const [key, val] of this) {
+            if (fn(val, key, this)) {
+                results[0].set(key, val);
+            }
+            else {
+                results[1].set(key, val);
+            }
+        }
+        return results;
+    }
+    flatMap(fn, thisArg) {
+        const collections = this.map(fn, thisArg);
+        return new this.constructor[Symbol.species]().concat(...collections);
+    }
+    map(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        const iter = this.entries();
+        return Array.from({ length: this.size }, () => {
+            const [key, value] = iter.next().value;
+            return fn(value, key, this);
+        });
+    }
+    mapValues(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        const coll = new this.constructor[Symbol.species]();
+        for (const [key, val] of this)
+            coll.set(key, fn(val, key, this));
+        return coll;
+    }
+    some(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        for (const [key, val] of this) {
+            if (fn(val, key, this))
+                return true;
+        }
+        return false;
+    }
+    every(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        for (const [key, val] of this) {
+            if (!fn(val, key, this))
+                return false;
+        }
+        return true;
+    }
+    /**
+     * Applies a function to produce a single value. Identical in behavior to
+     * [Array.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce).
+     * @param {Function} fn Function used to reduce, taking four arguments; `accumulator`, `currentValue`, `currentKey`,
+     * and `collection`
+     * @param {*} [initialValue] Starting value for the accumulator
+     * @returns {*}
+     * @example collection.reduce((acc, guild) => acc + guild.memberCount, 0);
+     */
+    reduce(fn, initialValue) {
+        let accumulator;
+        if (typeof initialValue !== 'undefined') {
+            accumulator = initialValue;
+            for (const [key, val] of this)
+                accumulator = fn(accumulator, val, key, this);
+            return accumulator;
+        }
+        let first = true;
+        for (const [key, val] of this) {
+            if (first) {
+                accumulator = val;
+                first = false;
+                continue;
+            }
+            accumulator = fn(accumulator, val, key, this);
+        }
+        // No items iterated.
+        if (first) {
+            throw new TypeError('Reduce of empty collection with no initial value');
+        }
+        return accumulator;
+    }
+    each(fn, thisArg) {
+        this.forEach(fn, thisArg);
+        return this;
+    }
+    tap(fn, thisArg) {
+        if (typeof thisArg !== 'undefined')
+            fn = fn.bind(thisArg);
+        fn(this);
+        return this;
+    }
+    /**
+     * Creates an identical shallow copy of this collection.
+     * @returns {Collection}
+     * @example const newColl = someColl.clone();
+     */
+    clone() {
+        return new this.constructor[Symbol.species](this);
+    }
+    /**
+     * Combines this collection with others into a new collection. None of the source collections are modified.
+     * @param {...Collection} collections Collections to merge
+     * @returns {Collection}
+     * @example const newColl = someColl.concat(someOtherColl, anotherColl, ohBoyAColl);
+     */
+    concat(...collections) {
+        const newColl = this.clone();
+        for (const coll of collections) {
+            for (const [key, val] of coll)
+                newColl.set(key, val);
+        }
+        return newColl;
+    }
+    /**
+     * Checks if this collection shares identical items with another.
+     * This is different to checking for equality using equal-signs, because
+     * the collections may be different objects, but contain the same data.
+     * @param {Collection} collection Collection to compare with
+     * @returns {boolean} Whether the collections have identical contents
+     */
+    equals(collection) {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (!collection)
+            return false; // runtime check
+        if (this === collection)
+            return true;
+        if (this.size !== collection.size)
+            return false;
+        for (const [key, value] of this) {
+            if (!collection.has(key) || value !== collection.get(key)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    /**
+     * The sort method sorts the items of a collection in place and returns it.
+     * The sort is not necessarily stable in Node 10 or older.
+     * The default sort order is according to string Unicode code points.
+     * @param {Function} [compareFunction] Specifies a function that defines the sort order.
+     * If omitted, the collection is sorted according to each character's Unicode code point value,
+     * according to the string conversion of each element.
+     * @returns {Collection}
+     * @example collection.sort((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
+     */
+    sort(compareFunction = Collection.defaultSort) {
+        const entries = [...this.entries()];
+        entries.sort((a, b) => compareFunction(a[1], b[1], a[0], b[0]));
+        // Perform clean-up
+        super.clear();
+        // Set the new entries
+        for (const [k, v] of entries) {
+            super.set(k, v);
+        }
+        return this;
+    }
+    /**
+     * The intersect method returns a new structure containing items where the keys are present in both original structures.
+     * @param {Collection} other The other Collection to filter against
+     * @returns {Collection}
+     */
+    intersect(other) {
+        const coll = new this.constructor[Symbol.species]();
+        for (const [k, v] of other) {
+            if (this.has(k))
+                coll.set(k, v);
+        }
+        return coll;
+    }
+    /**
+     * The difference method returns a new structure containing items where the key is present in one of the original structures but not the other.
+     * @param {Collection} other The other Collection to filter against
+     * @returns {Collection}
+     */
+    difference(other) {
+        const coll = new this.constructor[Symbol.species]();
+        for (const [k, v] of other) {
+            if (!this.has(k))
+                coll.set(k, v);
+        }
+        for (const [k, v] of this) {
+            if (!other.has(k))
+                coll.set(k, v);
+        }
+        return coll;
+    }
+    /**
+     * The sorted method sorts the items of a collection and returns it.
+     * The sort is not necessarily stable in Node 10 or older.
+     * The default sort order is according to string Unicode code points.
+     * @param {Function} [compareFunction] Specifies a function that defines the sort order.
+     * If omitted, the collection is sorted according to each character's Unicode code point value,
+     * according to the string conversion of each element.
+     * @returns {Collection}
+     * @example collection.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
+     */
+    sorted(compareFunction = Collection.defaultSort) {
+        return new this.constructor[Symbol.species](this).sort((av, bv, ak, bk) => compareFunction(av, bv, ak, bk));
+    }
+    static defaultSort(firstValue, secondValue) {
+        return Number(firstValue > secondValue) || Number(firstValue === secondValue) - 1;
+    }
+}
+exports.Collection = Collection;
+Collection.default = Collection;
+exports.default = Collection;
+
 
 /***/ })
 
@@ -72,7 +602,7 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexpo
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./lib/index.js");
+/******/ 	var __webpack_exports__ = __webpack_require__(568);
 /******/ 	Eventra = __webpack_exports__;
 /******/ 	
 /******/ })()
