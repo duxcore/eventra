@@ -6,9 +6,9 @@
   "repository": "https://github.com/duxcore/eventra.git",
   "author": "Jackson Roberts <jackson@holopanio.com>",
   "license": "GPL-3.0",
-  "private": false,
   "scripts": {
-    "build": "zx scripts/build.mjs"
+    "build": "zx scripts/build.mjs",
+    "deploy": "yarn build -wp; yarn publish;"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.29.0",

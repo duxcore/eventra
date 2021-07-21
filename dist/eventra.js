@@ -80,10 +80,6 @@ class Eventra {
     }
 }
 exports.Eventra = Eventra;
-const ev = new Eventra();
-ev.on("hello", (msg) => {
-    console.log("Recieved greeting:", msg);
-});
 
 
 /***/ }),
