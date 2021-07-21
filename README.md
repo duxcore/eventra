@@ -48,10 +48,10 @@ eventra.on('greeting', (msg) => {
 eventra.emit('greeting', "Hello User");
 ```
 
-# Browswer Implementation
-When we ship this library, we also ship it with a webpacked version so that you may simply slot it into the browser.  To do so you can use the `Eventra` namespace and call the class from that. Here is an example as such:
+# Browser Implementation
+When we ship this library, we also ship it with a bundled version so that you may simply slot it into the browser. To do so you can use the `Eventra` namespace and call the class from that. Here is an example as such:
 
-### Browswer Example
+### Browser Example
 ```html
 <script src='https://cdn.jsdelivr.net/gh/duxcore/eventra@v1.0.0/dist/eventra.min.js'></script>
 <script>
