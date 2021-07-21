@@ -1,7 +1,8 @@
 import ListenerArray from "./lib/ListenerArray";
-import { ListenerCallback } from "./types";
+import { DefaultListener, ListenerSignature } from "./types/events";
+import { ListenerCallback } from "./types/types";
 
-export class Eventra {
+export class Eventra<Events extends ListenerSignature<Events> = DefaultListener> {
   
   private _listeners = new ListenerArray({ mode: "recurring" });
   private _singularListeners = new ListenerArray({ mode: "once" });
@@ -9,13 +10,13 @@ export class Eventra {
   addListener = this.on;
   off = this.removeListener;
 
-  emit(event: string, ...args) {
+  emit<E extends keyof Events>(event: E, ...args: Parameters<Events[E]>) {
     this._listeners.executeEvent(event, ...args);
     this._singularListeners.executeEvent(event, ...args)
   }
 
-  eventNames(): string[] {
-    let finalNamesArray: string[] = []
+  eventNames<E extends keyof Events>(): E[] {
+    let finalNamesArray: E[] = []
 
     this._listeners.storage.map((val, key) => {
       if (!finalNamesArray.includes(key)) finalNamesArray.push(key);
@@ -29,14 +30,14 @@ export class Eventra {
   }
 
   
-  listenerCount(eventName: string): number {
+  listenerCount<E extends keyof Events>(eventName: E): number {
     const recurring = this._listeners.countListeners(eventName);
     const singular = this._singularListeners.countListeners(eventName);
 
     return (recurring + singular);
   }
   
-  listeners(eventName: string) {
+  listeners<E extends keyof Events>(eventName: E) {
     let recurring = this._listeners.fetchListeners(eventName);
     let singular = this._singularListeners.fetchListeners(eventName);
 
@@ -47,26 +48,30 @@ export class Eventra {
   }
 
 
-  on(eventName: string, listener: ListenerCallback) {
+  on<E extends keyof Events>(eventName: E, listener: Events[E]): void {
     this._listeners.add(eventName, listener);
+    return;
   }
   
-  once(eventName: string, listener: ListenerCallback) {
+  once<E extends keyof Events>(eventName: E, listener: Events[E]): void {
     this._singularListeners.add(eventName, listener);
+    return;
   }
 
 
-  prependListener(eventName: string, listener: ListenerCallback) {
+  prependListener<E extends keyof Events>(eventName: E, listener: Events[E]): void {
     this._listeners.prepend(eventName, listener);
+    return;
   }
   
-  prependOnceListener(eventName: string, listener: ListenerCallback) {
+  prependOnceListener<E extends keyof Events>(eventName: E, listener: Events[E]): void {
     this._singularListeners.prepend(eventName, listener);
+    return;
   }
 
 
-  removeAllListeners(eventName: string | string[]): this {
-    const listeners = typeof eventName == 'string' ? [ eventName ] : eventName;
+  removeAllListeners<E extends keyof Events>(...eventName: E[]): this {
+    const listeners: E[] = [...eventName]; 
 
     listeners.map(en => {
       this._listeners.removeEvent(en);
@@ -76,7 +81,7 @@ export class Eventra {
     return this;
   }
 
-  removeListener(eventName: string, listener: ListenerCallback): this {
+  removeListener<E extends keyof Events>(eventName: E, listener: Events[E]): this {
     this._listeners.removeListener(eventName, listener);
     this._singularListeners.removeListener(eventName, listener);
 

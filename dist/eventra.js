@@ -51,18 +51,22 @@ class Eventra {
     }
     on(eventName, listener) {
         this._listeners.add(eventName, listener);
+        return;
     }
     once(eventName, listener) {
         this._singularListeners.add(eventName, listener);
+        return;
     }
     prependListener(eventName, listener) {
         this._listeners.prepend(eventName, listener);
+        return;
     }
     prependOnceListener(eventName, listener) {
         this._singularListeners.prepend(eventName, listener);
+        return;
     }
-    removeAllListeners(eventName) {
-        const listeners = typeof eventName == 'string' ? [eventName] : eventName;
+    removeAllListeners(...eventName) {
+        const listeners = [...eventName];
         listeners.map(en => {
             this._listeners.removeEvent(en);
             this._singularListeners.removeEvent(en);
@@ -76,6 +80,10 @@ class Eventra {
     }
 }
 exports.Eventra = Eventra;
+const ev = new Eventra();
+ev.on("hello", (msg) => {
+    console.log("Recieved greeting:", msg);
+});
 
 
 /***/ }),

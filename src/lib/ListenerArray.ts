@@ -1,7 +1,7 @@
-import { ListenerArrayMode, ListenerArrayOptions, ListenerCallback } from "../types";
+import { ListenerArrayMode, ListenerArrayOptions, ListenerCallback } from "../types/types";
 import Collection from "../util/Collection";
 
-type CollectionType = Collection<string, ListenerCallback[]>;
+type CollectionType = Collection<string | any, ListenerCallback[]>;
 
 export default class ListenerArray {
 
@@ -27,7 +27,7 @@ export default class ListenerArray {
     return internal;
   }
 
-  add(eventName: string, listener: ListenerCallback): this {
+  add(eventName: string | any, listener: ListenerCallback): this {
     let carbonCopy = this._cloneInternalStorage();
     let event = carbonCopy.get(eventName);
 
@@ -42,7 +42,7 @@ export default class ListenerArray {
     return this;
   }
 
-  prepend(eventName: string, listener: ListenerCallback): this {
+  prepend(eventName: string | any, listener: ListenerCallback): this {
     let carbonCopy = this._cloneInternalStorage();
     let event = carbonCopy.get(eventName);
 
@@ -57,7 +57,7 @@ export default class ListenerArray {
     return this;
   }
 
-  removeListener(eventName: string, listener: ListenerCallback): this {
+  removeListener(eventName: string | any, listener: ListenerCallback): this {
     let carbonCopy = this._cloneInternalStorage();
     let event = carbonCopy.get(eventName);
 
@@ -77,7 +77,7 @@ export default class ListenerArray {
     return this;
   }
 
-  removeEvent(eventName: string): this {
+  removeEvent(eventName: string | any): this {
     let carbonCopy = this._cloneInternalStorage();
     let event = carbonCopy.get(eventName);
 
@@ -88,20 +88,20 @@ export default class ListenerArray {
     return this;
   }
 
-  countListeners(eventName: string): number {
+  countListeners(eventName: string | any): number {
     const event = this._internalStorage.get(eventName);
 
     if (!event) return 0;
     return event.length;
   }
 
-  fetchListeners(eventName: string): ListenerCallback[] {
+  fetchListeners(eventName: string | any): ListenerCallback[] {
     const event = this._internalStorage.get(eventName);
     if (!event) return [];
     return event;
   }
 
-  executeEvent(eventName: string, ...args): this {
+  executeEvent(eventName: string | any, ...args): this {
     let carbonCopy = this._cloneInternalStorage();
     let event = carbonCopy.get(eventName);
 
