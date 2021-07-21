@@ -53,7 +53,7 @@ When we ship this library, we also ship it with a bundled version so that you ma
 
 ### Browser Example
 ```html
-<script src='https://cdn.jsdelivr.net/gh/duxcore/eventra@v1.0.0/dist/eventra.min.js'></script>
+<script src='https://cdn.jsdelivr.net/gh/duxcore/eventra@v1.0.1/dist/eventra.min.js'></script>
 <script>
   const eventra = new Eventra.Eventra();
 
