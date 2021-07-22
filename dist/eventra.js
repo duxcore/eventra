@@ -17,13 +17,25 @@ class Eventra {
     constructor() {
         this._listeners = new ListenerArray_1.default({ mode: "recurring" });
         this._singularListeners = new ListenerArray_1.default({ mode: "once" });
+        /**
+         * Alias for `Eventra.on`
+         */
         this.addListener = this.on;
+        /**
+         * Alias for `Eventra.removeListener`
+         */
         this.off = this.removeListener;
     }
+    /**
+     * Synchronously calls each of the listeners registered for the event, in the order they were registered, passing the supplied arguments to each.
+     */
     emit(event, ...args) {
         this._listeners.executeEvent(event, ...args);
         this._singularListeners.executeEvent(event, ...args);
     }
+    /**
+     * Returns an array listing the events for which the emitter has registered listeners.
+     */
     eventNames() {
         let finalNamesArray = [];
         this._listeners.storage.map((val, key) => {
@@ -36,11 +48,17 @@ class Eventra {
         });
         return finalNamesArray;
     }
+    /**
+     * Returns the number of listeners listening to the event.
+     */
     listenerCount(eventName) {
         const recurring = this._listeners.countListeners(eventName);
         const singular = this._singularListeners.countListeners(eventName);
         return (recurring + singular);
     }
+    /**
+     * Returns a copy of the array of listeners for the event.
+     */
     listeners(eventName) {
         let recurring = this._listeners.fetchListeners(eventName);
         let singular = this._singularListeners.fetchListeners(eventName);
@@ -49,22 +67,49 @@ class Eventra {
             singular
         };
     }
+    /**
+     * Adds the listener function to the end of the listeners array for the event.
+     *
+     * Returns a reference to the eventra instance, so that calls can be chained.
+     */
     on(eventName, listener) {
         this._listeners.add(eventName, listener);
-        return;
+        return this;
     }
+    /**
+     * Adds a one-time listener function for the event.
+     * The next time the event is triggered, this listener is removed and then invoked.
+     *
+     * Returns a reference to the eventra instance, so that calls can be chained.
+     */
     once(eventName, listener) {
         this._singularListeners.add(eventName, listener);
-        return;
+        return this;
     }
+    /**
+     * Adds the listener function to the beginning of the listeners array for the event.
+     *
+     * Returns a reference to the eventra instance, so that calls can be chained.
+     */
     prependListener(eventName, listener) {
         this._listeners.prepend(eventName, listener);
-        return;
+        return this;
     }
+    /**
+     * Adds a one-time listener function for the event to the beginning of the listeners array.
+     * The next time the event is triggered, this listener is removed, and then invoked.
+     *
+     * Returns a reference to the eventra instance, so that calls can be chained.
+     */
     prependOnceListener(eventName, listener) {
         this._singularListeners.prepend(eventName, listener);
-        return;
+        return this;
     }
+    /**
+     * Removes all listeners, or those of the specified event(s).
+     *
+     * Returns a reference to the eventra instance, so that calls can be chained.
+     */
     removeAllListeners(...eventName) {
         const listeners = [...eventName];
         listeners.map(en => {
@@ -73,6 +118,11 @@ class Eventra {
         });
         return this;
     }
+    /**
+     * Removes the specified listener from the listener array for the event.
+     *
+     * Returns a reference to the eventra instance, so that calls can be chained.
+    */
     removeListener(eventName, listener) {
         this._listeners.removeListener(eventName, listener);
         this._singularListeners.removeListener(eventName, listener);
