@@ -2,6 +2,8 @@ import ListenerArray from "./lib/ListenerArray";
 import { DefaultListener, ListenerSignature } from "./types/events";
 
 export class Eventra<Events extends ListenerSignature<Events> = DefaultListener> {
+
+  public constructor() {}
   
   private _listeners = new ListenerArray({ mode: "recurring" });
   private _singularListeners = new ListenerArray({ mode: "once" });
