@@ -74,4 +74,4 @@ When we ship this library, we also ship it with a bundled version so that you ma
 ```
 <br />
 
-> This package uses [discordjs/collection](https://github.com/discordjs/collection) as the internal storage controller and is distrobuted with each copy of this library.
+> This package uses [discordjs/collection](https://github.com/discordjs/collection) as the internal storage controller and is distributed with each copy of this library.
