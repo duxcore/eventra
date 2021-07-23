@@ -37,6 +37,7 @@ To implement this into your JavaScript application, it is a very similar process
 
 ### Plain JavaScript example
 ```js
+const { Eventra } = require('@duxcore/eventra'); 
 const eventra = new Eventra();
 
 // Create your event listener
