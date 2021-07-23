@@ -34,9 +34,11 @@ eventra.emit('greeting', "Hello User");
 
 # JavaScript Implementation
 To implement this into your JavaScript application, it is a very similar process to the one listed above.  Simply declare your event emitter and start using it.
+You will need the eventra package from `@duxcore/eventra` which can be installed using npm: `npm install @duxcore/eventra` or through yarn: `yarn add @duxcore/eventra`
 
 ### Plain JavaScript example
 ```js
+const { Eventra } = require('@duxcore/eventra'); 
 const eventra = new Eventra();
 
 // Create your event listener
