@@ -26,7 +26,6 @@ jobs:
       - run: yarn install
       - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
       - run: yarn version --new-version "${{ github.event.release.tag_name }}"
-      - run: git push origin HEAD:dev
       - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
