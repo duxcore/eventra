@@ -1,6 +1,6 @@
 {
   "name": "@duxcore/eventra",
-  "version": "1.0.1",
+  "version": "v1.0.3",
   "description": "A lightweight, but powerful JavaScript event manger that will work in both in the browser and node.js.",
   "main": "lib/index.js",
   "repository": "https://github.com/duxcore/eventra.git",
