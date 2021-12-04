@@ -13,7 +13,7 @@ jobs:
           node-version: 14
       - run: yarn install
       
-  publish-gpr:
+  publish:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -21,11 +21,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 16
-          registry-url: https://npm.pkg.github.com/
-          scope: 'duxcore'
+          registry-url: https://registry.npmjs.org/
+          scope: '@duxcore'
       - run: yarn install
       - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
       - run: yarn version --new-version "${{ github.event.release.tag_name }}"
       - run: yarn publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
