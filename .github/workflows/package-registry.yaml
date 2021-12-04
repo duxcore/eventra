@@ -12,25 +12,9 @@ jobs:
         with:
           node-version: 14
       - run: yarn install
-
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - run: yarn install
-      - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
-      - run: yarn version --new-version "${{ github.event.release.tag_name }}"
-      - run: yarn publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          
+      
   publish-gpr:
-    needs: publish-npm
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
