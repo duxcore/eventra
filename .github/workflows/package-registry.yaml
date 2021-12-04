@@ -27,5 +27,5 @@ jobs:
       - run: yarn version --new-version "${{ github.event.release.tag_name }}"
       - run: yarn publish --non-interactive --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
