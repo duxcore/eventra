@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 16
       - run: yarn install
-      - run: yarn version --new-version "${{ github.event.release.tag_name }}"
+      - run: yarn version --no-git-tag-version --new-version "${{ github.event.release.tag_name }}"
       - run: npm publish --access public
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
