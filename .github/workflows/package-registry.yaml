@@ -18,11 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v1
         with:
           node-version: 16
       - run: yarn install
       - run: yarn version --no-git-tag-version --new-version "${{ github.event.release.tag_name }}"
+      - run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
       - run: npm publish --access public
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
