@@ -13,6 +13,7 @@ jobs:
           node-version: 14
       - run: yarn install
       - run: yarn build
+      - run: tsc
       
   publish:
     needs: build
