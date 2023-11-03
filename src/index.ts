@@ -67,7 +67,9 @@ export class Eventra<
       singular,
     };
   }
-
+  /**
+   * Adds a listener that will callback after every single event execution.
+   */
   any(listener: AnyListenerCallback) {
     this._listeners.addAny(listener);
     return this;
