@@ -1,20 +1,29 @@
-import { ListenerArrayMode, ListenerArrayOptions, ListenerCallback } from "../types/types";
+import {
+  AnyListenerCallback,
+  ListenerArrayMode,
+  ListenerArrayOptions,
+  ListenerCallback,
+} from "../types/types";
 import Collection from "../util/Collection";
 
 type CollectionType = Collection<string | any, ListenerCallback[]>;
 
 export default class ListenerArray {
-
   private _options: ListenerArrayOptions;
-  private _internalStorage = new Collection<string, ListenerCallback[]>()
+  private _internalStorage = new Collection<string, ListenerCallback[]>();
+  private _anyListeners: AnyListenerCallback[] = [];
 
   constructor(options?: ListenerArrayOptions) {
-    if (!options) this._options = { mode: "recurring" }
+    if (!options) this._options = { mode: "recurring" };
     else this._options = options;
   }
 
-  get mode(): ListenerArrayMode { return this._options.mode; }
-  get storage(): CollectionType { return this._internalStorage; }
+  get mode(): ListenerArrayMode {
+    return this._options.mode;
+  }
+  get storage(): CollectionType {
+    return this._internalStorage;
+  }
 
   private _updateInternalStorage(collection: CollectionType) {
     if (!collection) return;
@@ -42,6 +51,11 @@ export default class ListenerArray {
     return this;
   }
 
+  addAny(listener: ListenerCallback): this {
+    this._anyListeners.push(listener);
+    return this;
+  }
+
   prepend(eventName: string | any, listener: ListenerCallback): this {
     let carbonCopy = this._cloneInternalStorage();
     let event = carbonCopy.get(eventName);
@@ -63,13 +77,13 @@ export default class ListenerArray {
 
     if (!event) return this;
     if (!event.includes(listener)) return this;
-    
+
     if (event.length == 1) {
       carbonCopy.delete(eventName);
       this._updateInternalStorage(carbonCopy);
       return this;
-    };
-    
+    }
+
     const index = event.indexOf(listener);
     if (index > -1) event.splice(index, 1);
 
@@ -105,6 +119,8 @@ export default class ListenerArray {
     let carbonCopy = this._cloneInternalStorage();
     let event = carbonCopy.get(eventName);
 
+    this._anyListeners.map((listener) => listener(eventName, ...args));
+
     if (!event) return this;
 
     event.map((method, index) => {
@@ -112,7 +128,7 @@ export default class ListenerArray {
       return;
     });
 
-    if (this.mode == 'once') carbonCopy.delete(eventName);
+    if (this.mode == "once") carbonCopy.delete(eventName);
     this._updateInternalStorage(carbonCopy);
 
     return this;
